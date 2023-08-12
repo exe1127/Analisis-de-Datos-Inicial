@@ -3,18 +3,21 @@ from config import *
 
 
 def search(city, key):
-    url = f'{baseUrl}q={city}&api_key={key}'
+    url = f'{baseUrl}q={city}&appid={key}'
+
     request = requests.get(url)
 
     if request.status_code == 200:
+        return request.json()
+    else:
+        raise Exception('Error searching status code', request.status_code)
 
-        data = request.json()
-        result = {
-            'id_ciudad': data['id'],
-            'nombre_ciudad': data['name'],
-            'lon_ciudad': data['coord']['lon'],
-            'lat_ciudad': data['coord']['lat'],
-        }
 
+def search2(lat, lon, key):
+    url = f'{baseUrl}lat={lat}&lon={lon}&appid={key}&units=metric'
+
+    request = requests.get(url)
+    if request.status_code==200:
+        return request.json()
     else:
         raise Exception('Error searching status code', request.status_code)
