@@ -1,4 +1,6 @@
+
 baseUrl="https://api.openweathermap.org/data/2.5/weather?"
+
 
 
 dataHardcode = {
@@ -43,3 +45,7 @@ dataHardcode = {
         "name": "London",
         "cod": 200
     }
+
+
+
+#clase 19/7

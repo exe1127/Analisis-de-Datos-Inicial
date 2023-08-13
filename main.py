@@ -4,6 +4,8 @@ from pandas import json_normalize
 import json
 from function import *
 from config import *
+import os
+
 if __name__ == '__main__':
     # Obtener del archivo txt la key
     with open('credenciales.txt', 'r') as f:
@@ -29,16 +31,40 @@ if __name__ == '__main__':
         coords_list.append(coords_dict)
 
     # Realizamos la primera busqueda por nombre de la ciudad
+    """ cont = 0
     for city in cityList:
-        respuesta = search(city, key)
-        dataF = pd.DataFrame.from_dict(json_normalize(respuesta))
+        result = search(city, key)
+        cont = cont + 1
+        dataF = normalize(result, cont) """
 
-    """ normalizado = json_normalize(dataHardcode)
-    dataF = pd.DataFrame.from_dict(normalizado)
-    dataF = dataF.assign(City='Londes') """
+    datecols = ['dt', 'sunrise', 'sunset']
+    nWeather = json_normalize(dataHardcode['weather'])
+    nCoord = json_normalize(dataHardcode['coord'])
+    nMain = json_normalize(dataHardcode['main'])
+    nWind = json_normalize(dataHardcode['wind'])
+    nClouds = json_normalize(dataHardcode['clouds'])
+    nSys = json_normalize(dataHardcode['sys'])
 
+    start = json_normalize({'id': dataHardcode['id'], 'name': dataHardcode['name'],
+                            'cod': dataHardcode['cod'], 'dt': dataHardcode['dt']})
+
+    result_df = pd.concat(
+        [start, nWeather, nCoord, nMain, nWind, nClouds, nSys], axis=1)
+
+    result_df[datecols] = result_df[datecols].apply(
+        lambda x: pd.to_datetime(x, unit='s'))
+
+ # Realizamos la primera busqueda por latitud y longitud de la ciudad
+    """ cont = 0
     for coords_list in coords:
-        respuesta = search2(coords[0], coords[1], key)
-        dataF2 = pd.DataFrame.from_dict(json_normalize(respuesta))
+        result = search2(coords[0], coords[1], key)
+        cont = cont+1
+        dataF2 = normalize(result, cont) """
 
-    df_todas_ciudades = pd.concat([dataF, dataF2])
+    """  df = pd.concat([dataF, dataF2]) """
+
+    date = datetime.now().strftime("%Y%m%d")
+
+    """ df.to_csv(f"data_analytics/openweather/Archivo_{date}.csv", index=False) """
+
+    result_df.to_csv(f"data_analytics/openweather/Archivo_{date}.csv", index=False)
