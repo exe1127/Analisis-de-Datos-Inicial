@@ -1,2 +1,0 @@
-id,name,cod,dt,id,main,description,icon,lon,lat,temp,pressure,humidity,temp_min,temp_max,speed,deg,all,type,id,message,country,sunrise,sunset
-2643743,London,200,2017-01-30 15:20:00,300,Drizzle,light intensity drizzle,09d,-0.13,51.51,280.32,1012,81,279.15,281.15,4.1,80,90,1,5091,0.0103,GB,2017-01-30 07:40:37,2017-01-30 16:47:55

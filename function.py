@@ -6,11 +6,11 @@ from pandas import json_normalize
 
 
 def search(city, key):
+
     # Consulta a la appi
     url = f'{baseUrl}q={city}&appid={key}'
 
     request = requests.get(url)
-
     if request.status_code == 200:
         return request.json()
     else:
@@ -22,7 +22,7 @@ def search2(lat, lon, key):
     url = f'{baseUrl}lat={lat}&lon={lon}&appid={key}&units=metric'
 
     request = requests.get(url)
-
+    print(request.status_code, lat, lon, key)
     if request.status_code == 200:
         return request.json()
     else:
@@ -43,9 +43,9 @@ def normalize(request, cont):
                             'cod': request['cod'], 'dt': request['dt']})
 
     result_df = pd.concat(
-        [start, weather, coord, main, wind, clouds, sys], axis=cont)
+        [start, weather, coord, main, wind, clouds, sys], axis=1)
 
     result_df[datecols] = result_df[datecols].apply(
         lambda x: pd.to_datetime(x, unit='s'))
-    
+
     return result_df

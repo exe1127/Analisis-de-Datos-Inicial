@@ -1,10 +1,8 @@
 from datetime import datetime
 import pandas as pd
-from pandas import json_normalize
-import json
 from function import *
-from config import *
-import os
+
+
 
 if __name__ == '__main__':
     # Obtener del archivo txt la key
@@ -12,7 +10,7 @@ if __name__ == '__main__':
         key = f.read()
 
     cityList = ["London", "New York", "Cordoba", "Taipei",
-                "Buenos Aires", "Mexico DF", "Dublin", "Tilfis", "Bogota", "Tokio"]
+                "Buenos Aires", "Mexico City", "Dublin", "Tbilisi", "Bogota", "Tokio"]
 
     coordList = ["lat=31&lon=64", "lat=40&lon=-73", "lat=-31&lon=-64", "lat=25&lon=64", "lat=-34&lon=-58",
                  "lat=19&lon=-99", "lat=53&lon=6", "lat=41&lon=44", "lat=4&lon=74", "lat=35&lon=139"]
@@ -31,13 +29,15 @@ if __name__ == '__main__':
         coords_list.append(coords_dict)
 
     # Realizamos la primera busqueda por nombre de la ciudad
-    """ cont = 0
+    cont = 0
     for city in cityList:
         result = search(city, key)
         cont = cont + 1
-        dataF = normalize(result, cont) """
+        dataF = normalize(result, cont)
+        
 
-    datecols = ['dt', 'sunrise', 'sunset']
+
+    """ datecols = ['dt', 'sunrise', 'sunset']
     nWeather = json_normalize(dataHardcode['weather'])
     nCoord = json_normalize(dataHardcode['coord'])
     nMain = json_normalize(dataHardcode['main'])
@@ -52,19 +52,19 @@ if __name__ == '__main__':
         [start, nWeather, nCoord, nMain, nWind, nClouds, nSys], axis=1)
 
     result_df[datecols] = result_df[datecols].apply(
-        lambda x: pd.to_datetime(x, unit='s'))
+        lambda x: pd.to_datetime(x, unit='s')) """
 
- # Realizamos la primera busqueda por latitud y longitud de la ciudad
-    """ cont = 0
-    for coords_list in coords:
+ # Realizamos la segunda busqueda por latitud y longitud de la ciudad
+    
+    for coords in coords_list:
         result = search2(coords[0], coords[1], key)
         cont = cont+1
-        dataF2 = normalize(result, cont) """
+        dataF2 = normalize(result, cont)
 
-    """  df = pd.concat([dataF, dataF2]) """
+    df = pd.concat([dataF, dataF2])
 
     date = datetime.now().strftime("%Y%m%d")
 
-    """ df.to_csv(f"data_analytics/openweather/Archivo_{date}.csv", index=False) """
+    df.to_csv(f"data_analytics/openweather/Archivo_{date}.csv", index=False) 
 
-    result_df.to_csv(f"data_analytics/openweather/Archivo_{date}.csv", index=False)
+    """ result_df.to_csv(f"data_analytics/openweather/Archivo_{date}.csv", index=False) """
