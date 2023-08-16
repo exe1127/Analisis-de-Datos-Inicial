@@ -19,7 +19,7 @@ if __name__ == '__main__':
     list = []
     cont = 0
 
-    """ # Realizamos la primera busqueda por nombre de la ciudad
+    # Realizamos la primera busqueda por nombre de la ciudad
     for city in cityList:
         list.append(search(city,key))
         
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         lon = float(lon.split('=')[1])
     # Realizamos la segunda busqueda por latitud y longitud de la ciudad
         cont = cont+1
-        list.append(search2(lat, lon, key)) """
+        list.append(search2(lat, lon, key))
 
     normalized_data = [normalize(entry) for entry in data]
 
@@ -47,7 +47,8 @@ if __name__ == '__main__':
       dataF=  pd.concat([dataF,lis], ignore_index=True)
     
      """
-    print(consolidated_df)
+    
+    """ print(consolidated_df) """
 
     date = datetime.now().strftime("%Y%m%d")
 
