@@ -37,19 +37,6 @@ if __name__ == '__main__':
 
     consolidated_df = pd.concat(normalized_data)
 
-    
-
-    """ for city in [1, 2, 3]:
-        list.append(normalize(dataHardcode)) """
-
-    """ for lis in list:
-      
-      dataF=  pd.concat([dataF,lis], ignore_index=True)
-    
-     """
-    
-    """ print(consolidated_df) """
-
     date = datetime.now().strftime("%Y%m%d")
 
     consolidated_df.to_csv(f"data_analytics/openweather/Archivo_{date}.csv", index=False)
