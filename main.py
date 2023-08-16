@@ -28,11 +28,11 @@ if __name__ == '__main__':
 
     
 
-    for lis in list:
+    """ for lis in list:
       
       dataF=  pd.concat([dataF,lis], ignore_index=True)
     
-    print(list)
+    print(list) """
 
     
 
