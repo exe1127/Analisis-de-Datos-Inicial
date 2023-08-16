@@ -22,7 +22,6 @@ def search2(lat, lon, key):
     url = f'{baseUrl}lat={lat}&lon={lon}&appid={key}&units=metric'
 
     request = requests.get(url)
-    print(request.status_code, lat, lon)
     if request.status_code == 200:
         return request.json()
     else:
@@ -32,6 +31,9 @@ def search2(lat, lon, key):
 def normalize(request):
     # Normalizacion de la respuesta de la api
     datecols = ['dt', 'sunrise', 'sunset']
+    records = []
+
+    
     weather = json_normalize(request['weather'])
     coord = json_normalize(request['coord'])
     main = json_normalize(request['main'])
@@ -39,14 +41,18 @@ def normalize(request):
     clouds = json_normalize(request['clouds'])
     sys = json_normalize(request['sys'])
 
-    start = json_normalize({'id': request['id'], 'name': request['name'],
-                            'cod': request['cod'], 'dt': request['dt']})
+    record = {
+            'id': request['id'], 
+            'name': request['name'],
+            'cod': request['cod'],
+            'dt': pd.to_datetime(request['dt'], unit='s'),
+            **weather.iloc[0], **coord.iloc[0], **main.iloc[0], **wind.iloc[0], **clouds.iloc[0], **sys.iloc[0]
+    }
+    records.append(record)
 
-    result_df = pd.concat(
-        [start, weather, coord, main, wind, clouds, sys], axis=1)
+    result_df = pd.DataFrame(records)
+    result_df = result_df.set_index('id')
 
-    result_df[datecols] = result_df[datecols].apply(
-        lambda x: pd.to_datetime(x, unit='s'))
-    
-    result_df = result_df.set_index('name', drop=True)
+    result_df[datecols] = result_df[datecols].apply(pd.to_datetime)
     return result_df
+   
