@@ -22,14 +22,14 @@ def search2(lat, lon, key):
     url = f'{baseUrl}lat={lat}&lon={lon}&appid={key}&units=metric'
 
     request = requests.get(url)
-    print(request.status_code, lat, lon, key)
+    print(request.status_code, lat, lon)
     if request.status_code == 200:
         return request.json()
     else:
         raise Exception('Error searching status code', request.status_code)
 
 
-def normalize(request, cont):
+def normalize(request):
     # Normalizacion de la respuesta de la api
     datecols = ['dt', 'sunrise', 'sunset']
     weather = json_normalize(request['weather'])
@@ -47,5 +47,6 @@ def normalize(request, cont):
 
     result_df[datecols] = result_df[datecols].apply(
         lambda x: pd.to_datetime(x, unit='s'))
-
+    
+    result_df = result_df.set_index('name', drop=True)
     return result_df
