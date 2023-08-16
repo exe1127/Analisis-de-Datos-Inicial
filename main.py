@@ -1,7 +1,6 @@
 from datetime import datetime
 import pandas as pd
 from function import *
-from config import *
 
 if __name__ == '__main__':
     # Obtener del archivo txt la key
@@ -22,7 +21,7 @@ if __name__ == '__main__':
         list.append(search(city, key))
 
     for coords in coordList:
-    # Separamos los elementos del arrregolo en longitud y latitud
+        # Separamos los elementos del arrregolo en longitud y latitud
         lat, lon = coords.split('&')
     # Extraemos los valores numéricos de latitud y longitud después de "lat=" y "lon="
         lat = float(lat.split('=')[1])

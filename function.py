@@ -56,7 +56,7 @@ def normalize(request):
 
     # Establece el índice del DataFrame en la columna 'id' para evitar errores
     result_df = result_df.set_index('id')
-    
+
     # Convierte las columnas de fechas a objetos de fecha y hora
     result_df[datecols] = result_df[datecols].apply(pd.to_datetime)
 
